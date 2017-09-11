@@ -38,9 +38,9 @@ See the file `databook`.
 
 
 ## Well naming
-A physical well is called a `HOLE`. A phsyical well is a well that is drilled. A nominal well is a well is a string in dual completions where gas lift is used. A dual completion has a long string **LS** and a short string **SS**. Each string produces from their own isolated formations and act as separate wells with the only exception of the annulus as a common point of injection. Each string, LS or SS, connect to its production manifold in the surface.
+A physical well is called a `HOLE`. A phsyical well is a well that has been drilled and completed. A nominal well is a string in dual completions where gas lift has been deployed. A dual completion has a long string **LS** and a short string **SS**. Each string produces from their own isolated formations, and act as separate wells with the only exception of the annulus which is a common point of injection. Each string, LS or SS, connects to its production manifold in the surface; they do not commingle subsurface.
 
-That is why a physical well or hole sometimes contains two nominal wells. A nominal well is used to perform nodal analysis and other well performance analysis.
+That is why a physical well or hole sometimes contains two nominal wells. A nominal well is used to perform nodal analysis and other well performance activities.
 
 The wells are composed by the field, platform, well number and completion type. The naming look similar to this:
 
