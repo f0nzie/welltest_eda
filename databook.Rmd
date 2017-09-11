@@ -218,7 +218,14 @@ table(cut(dataset$WATERCUT_PCT,
 hist(dataset$WATERCUT_PCT[which(!dataset$WATERCUT_PCT > 100)])
 ```
 
+
 #### Logical process status of a well
+These are character-boolean variables: "Y" or "N".
+```{r}
+unique(dataset$CAN_PROC_STEAMINJ)
+unique(dataset$CAN_PROC_WATINJ)
+```
+
 
      [15] "CALC_SEQ_NO"                   "CAN_PROC_OIL"                 
      [17] "CAN_PROC_GAS"                  "CAN_PROC_WAT"                 
@@ -230,6 +237,7 @@ hist(dataset$WATERCUT_PCT[which(!dataset$WATERCUT_PCT > 100)])
 
 
 #### Logical production status of a well
+These are character-boolean variables: "Y" or "N".
 
      [27] "ISPRODUCER"                    "ISPRODUCEROROTHER"            
      [29] "ISINJECTOR"                    "ISOTHER"                      
@@ -239,3 +247,11 @@ hist(dataset$WATERCUT_PCT[which(!dataset$WATERCUT_PCT > 100)])
      [37] "ISWATERINJECTOR"               "ISAIRINJECTOR"                
      [39] "ISSTEAMINJECTOR"               "ISWASTEINJECTOR"              
      [41] "ISCO2INJECTOR" 
+
+```{r}
+unique(dataset$ISINJECTOR)
+unique(dataset$ISGASINJECTOR)
+unique(dataset$ISPRODUCEROROTHER)
+unique(dataset$ISWASTEINJECTOR)
+```
+

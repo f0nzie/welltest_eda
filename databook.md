@@ -489,7 +489,17 @@ hist(dataset$WATERCUT_PCT[which(!dataset$WATERCUT_PCT > 100)])
 
 <img src="databook_files/figure-html/unnamed-chunk-25-1.png" style="display: block; margin: auto;" />
 
+
 #### Logical process status of a well
+These are character-boolean variables: "Y" or "N".
+
+```r
+unique(dataset$CAN_PROC_STEAMINJ)
+#>: [1] "N"
+unique(dataset$CAN_PROC_WATINJ)
+#>: [1] "N"
+```
+
 
      [15] "CALC_SEQ_NO"                   "CAN_PROC_OIL"                 
      [17] "CAN_PROC_GAS"                  "CAN_PROC_WAT"                 
@@ -501,6 +511,7 @@ hist(dataset$WATERCUT_PCT[which(!dataset$WATERCUT_PCT > 100)])
 
 
 #### Logical production status of a well
+These are character-boolean variables: "Y" or "N".
 
      [27] "ISPRODUCER"                    "ISPRODUCEROROTHER"            
      [29] "ISINJECTOR"                    "ISOTHER"                      
@@ -510,3 +521,16 @@ hist(dataset$WATERCUT_PCT[which(!dataset$WATERCUT_PCT > 100)])
      [37] "ISWATERINJECTOR"               "ISAIRINJECTOR"                
      [39] "ISSTEAMINJECTOR"               "ISWASTEINJECTOR"              
      [41] "ISCO2INJECTOR" 
+
+
+```r
+unique(dataset$ISINJECTOR)
+#>: [1] "N" "Y"
+unique(dataset$ISGASINJECTOR)
+#>: [1] "N"
+unique(dataset$ISPRODUCEROROTHER)
+#>: [1] "Y" "N"
+unique(dataset$ISWASTEINJECTOR)
+#>: [1] "N"
+```
+
