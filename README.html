@@ -122,27 +122,32 @@ $(document).ready(function () {
 
 <div id="background" class="section level2">
 <h2>Background</h2>
-<p>This is a dataset generated from production well tests on oil wells that produce under natural flow and gas lift conditions during a year.</p>
-<p>There are 13,400 well tests in total for more than 40 fields, 100+ platforms for 743 physical wells and 995 strings.</p>
-<p>These production well tests are taken periodically to assess the performance of the well. Generally a well under test is disconnected from the common production manifold and is connected to its own test separator and test tank. Measurements that are taken during a well test are:</p>
+<p>This is a dataset generated from production well tests on oil wells that produce under natural flow and gas lift artificial lift for a year.</p>
+<p>There are 13,400 well tests (observations) in total for more than 40 fields, 100+ offshore platforms for 743 physical wells (drilled hole), and 995 strings (in dual wells).</p>
+<p>These production well tests are taken periodically to assess the performance of the well. Generally a well under production test is disconnected from the common production manifold and reconnected to its own test separator and test tank. Typical measurements that are taken during a production well test are:</p>
 <ul>
-<li>Gross liquid production</li>
-<li>net oil</li>
-<li>produced gas</li>
-<li>produced water</li>
-<li>wellhead pressure</li>
-<li>wellhead temperature</li>
-<li>annulus pressure</li>
-<li>injected gas rate (in gas lift wells)</li>
-<li>other calculated variables such as watercut, GOR, etc.</li>
+<li>Gross liquid production (BLPD)</li>
+<li>net oil BOPD)</li>
+<li>produced gas (MSCFD or MMSFCD)</li>
+<li>produced water (BWPD)</li>
+<li>wellhead pressure (psia)</li>
+<li>wellhead temperature (deg Farenheit)</li>
+<li>annulus pressure (psia)</li>
+<li>injected gas rate in gas lift wells, (MSCFD or MMSCFD)</li>
+<li>other calculated variables such as watercut, GOR, duration of the test, other units, etc.</li>
 </ul>
-<p>Usually these test have a duration of 24 hours but this could vary depending on conditions. If the well test is not satisfactory it is marked as <code>rejected</code> and repeated.</p>
+<p>Usually these tests have a duration of 24 hours but this could vary depending on conditions.</p>
+<p>If the well test is not satisfactory it is marked as <code>rejected</code> and marked to be repeated.</p>
+</div>
+<div id="databook" class="section level2">
+<h2>Databook</h2>
+<p>There is an additional markdown file with desciption of the well test variables. See the file <code>databook</code>.</p>
 </div>
 <div id="well-naming" class="section level2">
 <h2>Well naming</h2>
-<p>A physical well is called a <code>HOLE</code>. A phsyical well is a well that is drilled. A nominal well is a well is a string in dual completions where gas lift is used. A dual completion has a long string <strong>LS</strong> and a short string <strong>SS</strong>. Each string produces from their own isolated formations and act as separate wells with the only exception of the annulus as a common point of injection. Each string, LS or SS, connect to its production manifold in the surface.</p>
-<p>That is why a physical well or hole sometimes contains two nominal wells. A nominal well is used to perform nodal analysis and other well performance analysis.</p>
-<p>The wells are composed by the field, platform, well number and completion type. The naming look similar to this:</p>
+<p>A physical well is called a <code>HOLE</code>. A phsyical well is a well that has been drilled and completed. A nominal well is a string in dual completions where gas lift has been deployed. A dual completion has a long string <strong>LS</strong> and a short string <strong>SS</strong>. Each string produces from their own isolated formations, and act as separate wells with the only exception of the annulus which is a common point of injection. Each string, LS or SS, connects to its production manifold in the surface; they do not commingle subsurface.</p>
+<p>That is why a physical well or hole sometimes contains two nominal wells. A nominal well is used to perform nodal analysis and other well performance activities.</p>
+<p>The well names are composed by the field, platform, well number and completion type. The naming look similar to this:</p>
 <pre><code>            FILD-P001-LS
             ATHR-Q999-SS
             </code></pre>
@@ -150,12 +155,12 @@ $(document).ready(function () {
 </div>
 <div id="what-can-we-learn-from-these-well-tests" class="section level2">
 <h2>What can we learn from these well tests</h2>
-<p>Usually well tests are run to assess the performance of the well. The results of the well test acts as a diagnostic of the well and can also be used as troubleshooting method. The well test is a powerful indicator of the behavior of the well telling us how close or how far is from the technical potential or the well performance curves such as the IPR or VLP.</p>
+<p>Usually well tests are run to assess the productivity or performance of the well. The results of the well test acts as a diagnostic of the well and can also be used as troubleshooting method. The well test is a powerful indicator of the behavior of the well telling us how close or how far is from the technical potential or the well performance curves such as the IPR or VLP.</p>
 <p>Well tests, together with reservoir and fluid properties are used to calibrate well models.</p>
 </div>
-<div id="what-question-can-data-science-address" class="section level2">
-<h2>What question can data science address?</h2>
-<ul>
+<div id="what-questions-can-data-science-address" class="section level2">
+<h2>What questions can data science address?</h2>
+<ol style="list-style-type: decimal">
 <li><p>which field has the highest oil production?</p></li>
 <li><p>when a field hit a 50% watercut?</p></li>
 <li><p>which is the well that has the highest gas injection rate?</p></li>
@@ -184,7 +189,7 @@ $(document).ready(function () {
 <li><p>what wells had the sharpest wellhead pressure decline?</p></li>
 <li><p>what is the average gas injection pressure?</p></li>
 <li><p>what are the fields and platforms with the highest and lowest gas injection pressure?</p></li>
-</ul>
+</ol>
 </div>
 
 

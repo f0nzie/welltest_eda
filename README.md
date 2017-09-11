@@ -4,32 +4,37 @@
 
 ## Background
 
-This is a dataset generated from production well tests on oil wells that produce under natural flow and gas lift conditions during a year.
+This is a dataset generated from production well tests on oil wells that produce under natural flow and gas lift artificial lift for a year.
 
-There are 13,400 well tests in total for more than 40 fields, 100+ platforms for 743 physical wells and 995 strings.
+There are 13,400 well tests (observations) in total for more than 40 fields, 100+ offshore platforms for 743 physical wells (drilled hole), and 995 strings (in dual wells).
 
-These production well tests are taken periodically to assess the performance of the well. Generally a well under test is disconnected from the common production manifold and is connected to its own test separator and test tank. Measurements that are taken during a well test are:
+These production well tests are taken periodically to assess the performance of the well. Generally a well under production test is disconnected from the common production manifold and reconnected to its own test separator and test tank. Typical measurements that are taken during a production well test are:
 
-* Gross liquid production
-* net oil
-* produced gas
-* produced water
-* wellhead pressure
-* wellhead temperature
-* annulus pressure
-* injected gas rate (in gas lift wells)
-* other calculated variables such as watercut, GOR, etc.
+* Gross liquid production (BLPD)
+* net oil BOPD)
+* produced gas (MSCFD or MMSFCD)
+* produced water (BWPD)
+* wellhead pressure (psia)
+* wellhead temperature (deg Farenheit)
+* annulus pressure (psia)
+* injected gas rate in gas lift wells, (MSCFD or MMSCFD)
+* other calculated variables such as watercut, GOR, duration of the test, other units, etc.
 
-Usually these test have a duration of 24 hours but this could vary depending on conditions.
-If the well test is not satisfactory it is marked as `rejected` and repeated.
+Usually these tests have a duration of 24 hours but this could vary depending on conditions.
+
+If the well test is not satisfactory it is marked as `rejected` and marked to be repeated. 
+
+## Databook
+There is an additional markdown file with desciption of the well test variables.
+See the file `databook`.
 
 
 ## Well naming
-A physical well is called a `HOLE`. A phsyical well is a well that is drilled. A nominal well is a well is a string in dual completions where gas lift is used. A dual completion has a long string **LS** and a short string **SS**. Each string produces from their own isolated formations and act as separate wells with the only exception of the annulus as a common point of injection. Each string, LS or SS, connect to its production manifold in the surface.
+A physical well is called a `HOLE`. A phsyical well is a well that has been drilled and completed. A nominal well is a string in dual completions where gas lift has been deployed. A dual completion has a long string **LS** and a short string **SS**. Each string produces from their own isolated formations, and act as separate wells with the only exception of the annulus which is a common point of injection. Each string, LS or SS, connects to its production manifold in the surface; they do not commingle subsurface.
 
-That is why a physical well or hole sometimes contains two nominal wells. A nominal well is used to perform nodal analysis and other well performance analysis.
+That is why a physical well or hole sometimes contains two nominal wells. A nominal well is used to perform nodal analysis and other well performance activities.
 
-The wells are composed by the field, platform, well number and completion type. The naming look similar to this:
+The well names are composed by the field, platform, well number and completion type. The naming look similar to this:
 
                 FILD-P001-LS
                 ATHR-Q999-SS
@@ -38,67 +43,67 @@ If the well has a unique string, then the well ends in **TS**, as in tubing stri
 
 
 ## What can we learn from these well tests
-Usually well tests are run to assess the performance of the well. The results of the well test acts as a diagnostic of the well and can also be used as troubleshooting method. The well test is a powerful indicator of the behavior of the well telling us how close or how far is from the technical potential or the well performance curves such as the IPR or VLP.
+Usually well tests are run to assess the productivity or performance of the well. The results of the well test acts as a diagnostic of the well and can also be used as troubleshooting method. The well test is a powerful indicator of the behavior of the well telling us how close or how far is from the technical potential or the well performance curves such as the IPR or VLP.
 
 Well tests, together with reservoir and fluid properties are used to calibrate well models.
 
 
 
-## What question can data science address?
+## What questions can data science address?
 
-* which field has the highest oil production?
+1. which field has the highest oil production?
 
-* when a field hit a 50% watercut?
+2. when a field hit a 50% watercut?
 
-* which is the well that has the highest gas injection rate?
+3. which is the well that has the highest gas injection rate?
 
-* what is the well that produces more oil with less gas injection rate? (gas lift well)
+4. what is the well that produces more oil with less gas injection rate? (gas lift well)
 
-* is there a relationship between the GOR and watercut?
+5. is there a relationship between the GOR and watercut?
 
-* which well test variables are correlated?
+6. which well test variables are correlated?
 
-* which well test variables are the least correlated?
+7. which well test variables are the least correlated?
 
-* how many wells are natural flow, gas lift or another artificial lift method?
+8. how many wells are natural flow, gas lift or another artificial lift method?
 
-* how many wells have dual completions?
+9. how many wells have dual completions?
 
-* which string (in dual completion wells) produces more oil? Short string or long string?
+10. which string (in dual completion wells) produces more oil? Short string or long string?
 
-* which wells were the ones with more tests during the current year?
+11. which wells were the ones with more tests during the current year?
 
-* which field had more well tests during the year?
+12. which field had more well tests during the year?
 
-* which well was retested more in any field?
+13. which well was retested more in any field?
 
-* which wells were tested more than 24 hours?
+14. which wells were tested more than 24 hours?
 
-* what is the average well test duration?
+15. what is the average well test duration?
 
-* what wells were more tested in a year?
+16. what wells were more tested in a year?
 
-* what wells have to be repeated more than 5 times in a week?
+17. what wells have to be repeated more than 5 times in a week?
 
-* what wells showed a considerable increase or decrease in gross production?
+18. what wells showed a considerable increase or decrease in gross production?
 
-* is there a relatioship between gas injection pressure and net oil production?
+19. is there a relatioship between gas injection pressure and net oil production?
 
-* what fields produce with the highest watercut?
+20. what fields produce with the highest watercut?
 
-* what fields have the highest and lowest GOR?
+21. what fields have the highest and lowest GOR?
 
-* what wells were shut in the longest?
+22. what wells were shut in the longest?
 
-* what wells were taken out of production during the year?
+23. what wells were taken out of production during the year?
 
-* what wells decreased oil production the most?
+24. what wells decreased oil production the most?
 
-* what wells increased oil production?
+25. what wells increased oil production?
 
-* what wells had the sharpest wellhead pressure decline?
+26. what wells had the sharpest wellhead pressure decline?
 
-* what is the average gas injection pressure?
+27. what is the average gas injection pressure?
 
-* what are the fields and platforms with the highest and lowest gas injection pressure?
+28. what are the fields and platforms with the highest and lowest gas injection pressure?
 
