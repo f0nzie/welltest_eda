@@ -107,3 +107,15 @@ Well tests, together with reservoir and fluid properties are used to calibrate w
 
 28. what are the fields and platforms with the highest and lowest gas injection pressure?
 
+## Data cleaning
+
+* Find NAs in numeric variables.
+
+* Which variables have the highest percentage of NAs?
+
+* Find empty observations in character variables. 
+
+* Are there any character variables wit more than 95% of NAs?
+
+* 
+
