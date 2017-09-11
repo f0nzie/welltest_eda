@@ -1,0 +1,241 @@
+---
+title: "Data Book"
+output:
+  html_document: 
+    keep_md: yes
+  html_notebook: default
+---
+
+```{r setup, include=F, error=T, message=F, warning=F}
+knitr::opts_chunk$set(echo=T, comment="#>:", collapse = TRUE,
+                      error=T, warning=F, message = F, fig.align = 'center' 
+                      )
+```
+
+
+
+```{r}
+# tibble allows to compress the output of a dataset when printing
+library(tibble)
+
+dataset <- read.csv("2007_welltest.csv", stringsAsFactors = FALSE)
+as.tibble(dataset)   # small output
+```
+
+
+```{r}
+# show all the columns 
+names(dataset)
+```
+
+```{r}
+# get only the numeric columns
+nums <- sapply(dataset, is.numeric)
+numdf <- dataset[, nums]
+names(numdf)
+```
+
+
+```{r}
+# get only the non-numeric columns
+nums <- sapply(dataset, is.numeric)
+nonumdf <- dataset[, !nums]
+names(nonumdf)
+```
+
+```{r}
+# show only the ID descriptive variables
+library(dplyr)
+
+dataset %>%
+    select(CODE, WELL_HOLE_CODE, OP_SUB_AREA_CODE, OP_AREA_CODE, OP_FCTY_1_CODE) %>%
+    head
+```
+
+
+```{r}
+# the physical well is called a HOLE
+# a HOLE can have two strings: LS and SS
+# a nominal well will be ANY-A0001-LS and another
+# well ANY-A0001-SS. Both belong to a HOLE
+# 
+# How many holes in this dataset?
+length(unique(dataset$WELL_HOLE_CODE))
+# unique(dataset$WELL_HOLE_CODE)
+```
+
+```{r}
+# how many nominal wells
+length(unique(dataset$CODE))
+```
+
+```{r}
+# how many fields
+length(unique(dataset$OP_SUB_AREA_CODE))
+unique(dataset$OP_SUB_AREA_CODE)
+```
+
+```{r}
+# how many operating units
+length(unique(dataset$OP_AREA_CODE))
+unique(dataset$OP_AREA_CODE)
+```
+
+```{r}
+# how many platforms
+length(unique(dataset$OP_FCTY_1_CODE))
+unique(dataset$OP_FCTY_1_CODE)
+```
+
+```{r}
+dataset <- read.csv("2007_welltest.csv", stringsAsFactors = FALSE)
+```
+
+
+`PRODUCTION_DAY`: date that the measurement was taken.
+
+`CODE`: nominal well. In the case of dual wells, it is one of the strings, teh short or the long.
+
+`WELL_HOLE_CODE`: the physical well that is drilled. A hole or physical well could have two nominal wells. See `CODE`.
+
+`WELL_TYPE`:   
+
+        Gas Producer
+        Oil Producer
+        Gas Producer Cond
+        Water Injector
+```{r}
+unique(dataset$WELL_TYPE)
+```
+
+`PROD_METHOD`: How the well produces.
+    Natural Flow
+    Gas Lift
+    Pumping Unit
+    
+```{r}
+unique(dataset$PROD_METHOD)
+```
+
+
+`WELL_CLASS`: Producer or Injector.
+
+```{r}
+unique(dataset$WELL_CLASS)
+```
+
+`DURATION_HRS`: duration of the test
+
+```{r}
+dur <- sort(unique(round(dataset$DURATION_HRS, 0))) # rounding, unique, sort
+dur
+```
+
+
+```{r}
+# interval analysis of test durantion
+table(cut(dataset$DURATION_HRS, breaks = c(0, 1, 2, 4, 6, 12, 24, 48, 72)))
+```
+
+
+`STATUS`: What happens with the well test.
+```{r}
+unique(dataset$STATUS)
+```
+
+`NET_OIL_RATE_ADJ_BBLSPERDAY`: Net oil produced in STB/DAY
+
+```{r}
+summary(dataset$NET_OIL_RATE_ADJ_BBLSPERDAY)
+
+# which wells are higher than 10,000 BOPD
+lmask <- dataset$NET_OIL_RATE_ADJ_BBLSPERDAY > 10000
+imask <- which(lmask)
+
+value = dataset$NET_OIL_RATE_ADJ_BBLSPERDAY[imask]
+well  = dataset$CODE[imask]
+
+data.frame(index = imask, well = well, NetOil = value)
+
+```
+
+```{r}
+# remove the two highest reading. They belong to a tank battery
+netoil <- dataset$NET_OIL_RATE_ADJ_BBLSPERDAY[-c(4579,4959)]
+summary(netoil)
+```
+
+
+```{r}
+# interval analysis of oil production
+table(cut(dataset$NET_OIL_RATE_ADJ_BBLSPERDAY, 
+          breaks = c(0, 50, 100, 250, 500, 1000, 2000, 4000, 8000, 10000)))
+```
+
+```{r}
+# histogram of net oil
+hist.data = hist(netoil, plot=F)   # do not plot. 
+# log-transform the counts: 2^2, 2^4, ... 2^10 = 1024
+hist.data$counts[hist.data$counts>0] <- log(hist.data$counts[hist.data$counts>0], 2)
+plot(hist.data)
+```
+
+WATERCUT_PCT
+```{r}
+summary(dataset$WATERCUT_PCT)
+```
+
+```{r}
+# values that are above 100 watercut
+mask  <- dataset$WATERCUT_PCT > 100
+value <- dataset$WATERCUT_PCT[which(dataset$WATERCUT_PCT > 100)]
+
+# wells and watercuts that abnormal
+well <- dataset$CODE[which(dataset$WATERCUT_PCT > 100)]
+data.frame(well = well, watercut = value)
+```
+
+
+```{r}
+library(tibble)
+# what wells have NAs 
+lmask <- is.na(dataset$WATERCUT_PCT)
+imask <- which(lmask)
+
+value <- dataset$WATERCUT_PCT[imask]
+well  <- dataset$CODE[imask]
+
+as.tibble(data.frame(well = well, watercut = value))
+```
+
+
+```{r}
+# interval analysis of watercut
+table(cut(dataset$WATERCUT_PCT, 
+          breaks = c(0, 10, 25, 50, 80, 90, 95, 100)))
+
+# histogram of only those wells that have watercut < 100
+hist(dataset$WATERCUT_PCT[which(!dataset$WATERCUT_PCT > 100)])
+```
+
+#### Logical process status of a well
+
+     [15] "CALC_SEQ_NO"                   "CAN_PROC_OIL"                 
+     [17] "CAN_PROC_GAS"                  "CAN_PROC_WAT"                 
+     [19] "CAN_PROC_GASLIFT"              "CAN_PROC_CO2"                 
+     [21] "CAN_PROC_GASINJ"               "CAN_PROC_WATINJ"              
+     [23] "CAN_PROC_STEAMINJ"             "CAN_PROC_COND"                
+     [25] "CAN_PROC_DILUENT"
+
+
+
+#### Logical production status of a well
+
+     [27] "ISPRODUCER"                    "ISPRODUCEROROTHER"            
+     [29] "ISINJECTOR"                    "ISOTHER"                      
+     [31] "ISNOTOTHER"                    "ISOILPRODUCER"                
+     [33] "ISGASPRODUCER"                 "ISCONDENSATEPRODUCER"         
+     [35] "ISWATERPRODUCER"               "ISGASINJECTOR"                
+     [37] "ISWATERINJECTOR"               "ISAIRINJECTOR"                
+     [39] "ISSTEAMINJECTOR"               "ISWASTEINJECTOR"              
+     [41] "ISCO2INJECTOR" 
